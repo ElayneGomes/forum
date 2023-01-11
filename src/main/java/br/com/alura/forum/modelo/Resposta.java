@@ -1,13 +1,19 @@
 package br.com.alura.forum.modelo;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
+@Entity
 public class Resposta {
 
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String mensagem;
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Topico topico;
 	private LocalDateTime dataCriacao = LocalDateTime.now();
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Usuario autor;
 	private Boolean solucao = false;
 
