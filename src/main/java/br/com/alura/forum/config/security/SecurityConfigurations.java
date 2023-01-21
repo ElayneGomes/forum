@@ -42,6 +42,7 @@ public class SecurityConfigurations {
                 .requestMatchers("/topicos").permitAll()
                 .requestMatchers("/topicos/*").permitAll()
                 .requestMatchers("/auth").permitAll()
+                .requestMatchers("/actuator/**").permitAll()
 //                .requestMatchers("/users" , "/users/**").hasRole("ADMIN")
 //                .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
