@@ -9,7 +9,9 @@ import org.hibernate.validator.constraints.Length;
 
 public class TopicoForm {
 
-    @NotNull @NotEmpty @Length(min = 5)
+    @NotNull
+    @NotEmpty
+    @Length(min = 5)
     private String titulo;
     @NotNull @NotEmpty @Length(min = 10)
     private String mensagem;
