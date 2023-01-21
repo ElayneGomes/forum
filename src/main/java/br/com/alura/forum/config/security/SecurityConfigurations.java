@@ -13,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @Configuration
@@ -38,6 +39,8 @@ public class SecurityConfigurations {
     public SecurityFilterChain filterChain(HttpSecurity  http) throws Exception {
         // Configurações de Autorização.
         http.authorizeHttpRequests()
+                .requestMatchers("/topicos").permitAll()
+                .requestMatchers("/topicos/*").permitAll()
                 .requestMatchers("/auth").permitAll()
 //                .requestMatchers("/users" , "/users/**").hasRole("ADMIN")
 //                .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
@@ -46,8 +49,8 @@ public class SecurityConfigurations {
                 .and().cors()
                 .and().headers().frameOptions().disable()
                 .and().csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//                .and().addFilterBefore(new AuthenticationJWTFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
 //                .exceptionHandling().authenticationEntryPoint(new UnauthorizedHandler())
 //                .and().exceptionHandling().accessDeniedHandler(new ForbiddenHandler());
 
