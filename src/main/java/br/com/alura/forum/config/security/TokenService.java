@@ -19,16 +19,16 @@ public class TokenService {
     private String secret;
 
     public String gerarToken(Authentication authentication) {
-        Usuario logado = (Usuario) authentication.getPrincipal();
+        Usuario logado = (Usuario) authentication.getPrincipal(); //Esse authentication tem um método chamado getPrincipal para conseguirmos recuperar o usuário que está logado
         Date hoje = new Date();
-        Date dataExpiracao = new Date(hoje.getTime() + Long.parseLong(expiration));
-
+        Date dataExpiration = new Date(hoje.getTime() + Long.parseLong(expiration)); //Eu estou somando os milisegundo da data hoje com e acrescentando mais os milisegundos da expiration;
         return Jwts.builder()
-                .setIssuer("API do Fórum da Alura")
-                .setSubject(logado.getId().toString())
+                .setIssuer("Api do Fórum da Alura") //Quem está fazendo a requisição;
+                .setSubject(logado.getId().toString())//quem é o dono desse token
                 .setIssuedAt(hoje)
-                .setExpiration(dataExpiracao)
+                .setExpiration(dataExpiration)
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }
+
 }

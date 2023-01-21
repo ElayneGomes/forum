@@ -7,13 +7,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+@EnableWebSecurity
 @Configuration
 public class SecurityConfigurations {
 
@@ -37,9 +38,9 @@ public class SecurityConfigurations {
     public SecurityFilterChain filterChain(HttpSecurity  http) throws Exception {
         // Configurações de Autorização.
         http.authorizeHttpRequests()
-                .requestMatchers("/auth","/users/register").permitAll()
-                .requestMatchers("/users" , "/users/**").hasRole("ADMIN")
-                .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
+                .requestMatchers("/auth").permitAll()
+//                .requestMatchers("/users" , "/users/**").hasRole("ADMIN")
+//                .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated()
                 .and().cors()
@@ -59,8 +60,8 @@ public class SecurityConfigurations {
                 ("/swagger-ui/**", "/v3/api-docs/**", "/h2-console/**");
     }
 
- public static void main(String[] args) {
-     System.out.println(new BCryptPasswordEncoder().encode("123456"));
- }
+// public static void main(String[] args) {
+//     System.out.println(new BCryptPasswordEncoder().encode("123456"));
+// }
 
 }
