@@ -4,6 +4,7 @@ import br.com.alura.forum.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -42,10 +43,10 @@ public class SecurityConfigurations {
                 .requestMatchers("/topicos").permitAll()
                 .requestMatchers("/topicos/*").permitAll()
                 .requestMatchers("/auth").permitAll()
-                .requestMatchers("/actuator/**").permitAll()
-//                .requestMatchers("/users" , "/users/**").hasRole("ADMIN")
-//                .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
-                .requestMatchers("/h2-console/**").permitAll()
+//                .requestMatchers("/actuator/**").permitAll()
+//                .requestMatchers("/users").permitAll()
+//                .requestMatchers("/swagger-ui/**").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/topicos/*").hasRole("MODERADOR")
                 .anyRequest().authenticated()
                 .and().cors()
                 .and().headers().frameOptions().disable()
@@ -61,7 +62,7 @@ public class SecurityConfigurations {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().requestMatchers
-                ("/swagger-ui/**", "/v3/api-docs/**", "/h2-console/**");
+                ("/swagger-ui/**", "/v3/api-docs/**");
     }
 
 // public static void main(String[] args) {
